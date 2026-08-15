@@ -4,18 +4,8 @@ const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 
 // Cielo vivo: estrellas ligeras, sin canvas ni imágenes externas para rendir bien en Safari/iPhone.
 
-// iOS Safari: detect the software keyboard without resizing the whole design.
-// This is intentionally presentation-only; svh remains the layout source of truth.
-if (window.visualViewport) {
-  const syncKeyboardState = () => {
-    const keyboardLikelyOpen = (window.innerHeight - window.visualViewport.height) > 140;
-    document.body.classList.toggle('keyboard-open', keyboardLikelyOpen);
-  };
-  window.visualViewport.addEventListener('resize', syncKeyboardState, { passive:true });
-  window.visualViewport.addEventListener('scroll', syncKeyboardState, { passive:true });
-  window.addEventListener('orientationchange', () => setTimeout(syncKeyboardState, 250), { passive:true });
-  syncKeyboardState();
-}
+// iOS Safari: viewport is intentionally locked at scale 1.
+// The login stays fixed while the keyboard is open; no visualViewport layout mutations.
 
 const stars = $('#stars');
 if (stars) {
@@ -108,15 +98,21 @@ const siteLoginError = $('#siteLoginError');
 async function validSiteLogin(password) {
   return (await sha256((password || '').trim())) === SITE_PASSWORD_HASH;
 }
-function unlockSite() {
-  if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-  document.body.classList.remove('keyboard-open');
-  sessionStorage.setItem('ampm-site-auth','1');
+function showUnlockedSite() {
   document.body.classList.remove('private-locked');
   loginGate?.classList.add('hidden');
 }
+function finishSiteLogin() {
+  if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  sessionStorage.setItem('ampm-site-auth','1');
+  // A fresh navigation is deliberate: iOS Safari can retain the visual viewport
+  // used by a focused field after it closes. Reloading restores a true 1:1 viewport.
+  const next = new URLSearchParams(location.search).get('next');
+  const destination = (next === 'capitulo-1.html' || next === 'capitulo-2.html') ? next : 'index.html?opened=1';
+  setTimeout(() => location.replace(destination), 40);
+}
 if (loginGate) {
-  if (sessionStorage.getItem('ampm-site-auth') === '1') unlockSite();
+  if (sessionStorage.getItem('ampm-site-auth') === '1') showUnlockedSite();
   else sitePassword?.removeAttribute('autofocus');
   $('#toggleSitePassword')?.addEventListener('click', () => {
     if (!sitePassword) return;
@@ -125,9 +121,7 @@ if (loginGate) {
   siteLoginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (await validSiteLogin(sitePassword?.value)) {
-      unlockSite();
-      const next = new URLSearchParams(location.search).get('next');
-      if (next === 'capitulo-1.html' || next === 'capitulo-2.html') location.href = next;
+      finishSiteLogin();
     } else {
       if (siteLoginError) siteLoginError.textContent = 'Contraseña incorrecta';
       $('.login-minimal')?.classList.remove('shake');
