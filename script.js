@@ -172,11 +172,26 @@ function updateChapterTwoCountdown() {
       const label = meta.querySelector('small');
       if (label) label.textContent = preview ? 'Modo pruebas' : '';
       const icon = meta.querySelector('b');
-      if (icon) icon.textContent = preview ? '↗' : '✓';
+      if (icon) {
+        icon.classList.remove('status-icon-clock');
+        icon.innerHTML = preview
+          ? '<svg viewBox="0 0 24 24" focusable="false"><path d="M8 16 16 8"></path><path d="M10 8h6v6"></path></svg>'
+          : '<svg viewBox="0 0 24 24" focusable="false"><path d="m7.5 12.5 3 3 6-7"></path></svg>';
+      }
     }
     return;
   }
   chapterTwoCard.setAttribute('aria-disabled','true');
+  chapterTwoCard.classList.remove('chapter-released');
+  if (meta) {
+    const label = meta.querySelector('small');
+    if (label) label.textContent = 'Se desbloquea en';
+    const icon = meta.querySelector('b');
+    if (icon && !icon.classList.contains('status-icon-clock')) {
+      icon.classList.add('status-icon-clock');
+      icon.innerHTML = '<svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.25"></circle><path d="M12 7.5v5l3.5 2"></path></svg>';
+    }
+  }
   const totalSeconds = Math.max(0, Math.floor(remaining / 1000));
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);
