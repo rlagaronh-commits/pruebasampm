@@ -137,6 +137,17 @@ $('#logoutButton')?.addEventListener('click', () => {
   location.href = 'index.html';
 });
 
+
+// Home → índice: one intentional, smooth viewport transition on iPhone Safari.
+const editorialCta = $('.editorial-cta');
+const contentsSection = $('#biblioteca');
+editorialCta?.addEventListener('click', (e) => {
+  if (!contentsSection) return;
+  e.preventDefault();
+  contentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  try { history.replaceState(null, '', '#biblioteca'); } catch (_) {}
+});
+
 // Capítulo II: se habilita el 17 de agosto de 2026 a las 00:00 en España peninsular (CEST, UTC+2).
 const chapterTwoCard = $('#chapterTwoCard');
 const chapterTwoCountdown = $('#chapterTwoCountdown');
@@ -154,11 +165,15 @@ function updateChapterTwoCountdown() {
   const remaining = preview ? 0 : CHAPTER_TWO_RELEASE.getTime() - Date.now();
   const meta = chapterTwoCountdown.closest('.chapter-row-meta');
   if (remaining <= 0) {
-    chapterTwoCountdown.textContent = preview ? 'Vista previa' : 'Disponible';
-    chapterTwoCountdown.parentElement.childNodes[0].textContent = '';
+    chapterTwoCountdown.textContent = preview ? 'VISTA PREVIA' : 'YA DISPONIBLE';
     chapterTwoCard.classList.add('chapter-released');
     chapterTwoCard.removeAttribute('aria-disabled');
-    if (meta) meta.querySelector('b').textContent = '→';
+    if (meta) {
+      const label = meta.querySelector('small');
+      if (label) label.textContent = preview ? 'Modo pruebas' : '';
+      const icon = meta.querySelector('b');
+      if (icon) icon.textContent = preview ? '↗' : '✓';
+    }
     return;
   }
   chapterTwoCard.setAttribute('aria-disabled','true');
