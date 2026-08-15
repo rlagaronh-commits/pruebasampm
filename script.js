@@ -108,7 +108,7 @@ function finishSiteLogin() {
   // A fresh navigation is deliberate: iOS Safari can retain the visual viewport
   // used by a focused field after it closes. Reloading restores a true 1:1 viewport.
   const next = new URLSearchParams(location.search).get('next');
-  const destination = (next === 'capitulo-1.html' || next === 'capitulo-2.html') ? next : 'index.html?opened=1';
+  const destination = next === 'capitulo-2.html' ? 'index.html?chapter=2' : (next === 'capitulo-1.html' ? next : 'index.html?opened=1');
   setTimeout(() => location.replace(destination), 40);
 }
 if (loginGate) {
@@ -229,7 +229,9 @@ if (chapterTwoCard && keyModal) {
     e.preventDefault();
     if (await validStoryKey(storyKey.value)) {
       sessionStorage.setItem('ampm-ch2-unlocked', '1');
-      window.location.href = 'capitulo-2.html';
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+      keyModal.hidden = true;
+      openChapterTwoInApp(true);
     } else {
       keyError.textContent = 'Esa no es nuestra clave ♡';
       $('.key-panel')?.classList.remove('shake');
@@ -237,6 +239,60 @@ if (chapterTwoCard && keyModal) {
       storyKey.select();
     }
   });
+}
+
+// Capítulo II dentro de la misma Web App. En iPhone nunca abandonamos index.html:
+// el capítulo se monta en un iframe de mismo origen a pantalla completa. Así Safari
+// no abre una ventana/navegador independiente al pasar la segunda contraseña.
+const chapterAppShell = $('#chapterAppShell');
+const chapterAppFrame = $('#chapterAppFrame');
+let chapterShellOpening = false;
+
+function openChapterTwoInApp(updateHistory = true) {
+  if (!chapterAppShell || !chapterAppFrame || chapterShellOpening) return;
+  chapterShellOpening = true;
+  sessionStorage.setItem('ampm-ch2-unlocked', '1');
+  document.body.classList.add('chapter-shell-open');
+  chapterAppShell.hidden = false;
+  if (!chapterAppFrame.src || chapterAppFrame.src === 'about:blank') {
+    chapterAppFrame.src = 'capitulo-2.html?embedded=1';
+  }
+  if (updateHistory) {
+    try { history.pushState({ ampmChapter: 2 }, '', 'index.html?chapter=2'); } catch (_) {}
+  }
+  requestAnimationFrame(() => {
+    chapterAppShell.classList.add('is-open');
+    chapterShellOpening = false;
+  });
+}
+
+function closeChapterTwoInApp(updateHistory = true) {
+  if (!chapterAppShell || !chapterAppFrame) return;
+  chapterAppShell.classList.remove('is-open');
+  document.body.classList.remove('chapter-shell-open');
+  if (updateHistory) {
+    try { history.replaceState({ ampmHome: true }, '', 'index.html?opened=1#biblioteca'); } catch (_) {}
+  }
+  window.setTimeout(() => {
+    chapterAppShell.hidden = true;
+    chapterAppFrame.src = 'about:blank';
+    document.getElementById('biblioteca')?.scrollIntoView({ block: 'start' });
+  }, 240);
+}
+
+window.addEventListener('message', (event) => {
+  if (event.origin !== location.origin) return;
+  if (event.data === 'ampm-close-chapter2') closeChapterTwoInApp(true);
+});
+
+window.addEventListener('popstate', () => {
+  const wantsChapter = new URLSearchParams(location.search).get('chapter') === '2';
+  if (wantsChapter && sessionStorage.getItem('ampm-ch2-unlocked') === '1') openChapterTwoInApp(false);
+  else if (chapterAppShell && !chapterAppShell.hidden) closeChapterTwoInApp(false);
+});
+
+if (chapterAppShell && new URLSearchParams(location.search).get('chapter') === '2' && sessionStorage.getItem('ampm-ch2-unlocked') === '1') {
+  requestAnimationFrame(() => openChapterTwoInApp(false));
 }
 
 // Pantalla privada del capítulo II.
@@ -358,4 +414,16 @@ if (namesScene) {
   } else {
     revealNames();
   }
+}
+
+// Cuando Capítulo II vive dentro del shell de la Web App, sus botones de volver
+// cierran el capítulo en el padre en vez de navegar a otra página de Safari.
+if (new URLSearchParams(location.search).get('embedded') === '1' && window.parent !== window) {
+  document.body.classList.add('embedded-chapter');
+  $$('.story-nav, .back-top').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.parent.postMessage('ampm-close-chapter2', location.origin);
+    });
+  });
 }
