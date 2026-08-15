@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c0517" />
+  <meta name="description" content="AM & PM — Capítulo II: La primera puerta fuera del trabajo." />
+  <title>AM & PM · Capítulo II</title>
+  <link rel="icon" href="assets/heart.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    if (sessionStorage.getItem('ampm-site-auth') !== '1') {
+      location.replace('index.html?next=capitulo-2.html');
+    }
+  </script>
+</head>
+<body class="chapter-page chapter-two-page locked">
+  <div class="noise" aria-hidden="true"></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <a class="story-nav" href="index.html" aria-label="Volver a la biblioteca"><span>←</span><b>Capítulos</b></a>
+  <button class="sound-toggle" id="soundToggle" type="button" aria-label="Activar ambiente"><span class="sound-icon">♫</span><span class="sound-label">ambiente</span></button>
+
+  <div class="chapter-lockscreen" id="chapterLockscreen">
+    <div class="lock-stars" aria-hidden="true"></div>
+    <div class="lock-door-wrap" aria-hidden="true"><div class="lock-door"><span></span></div></div>
+    <div class="lock-content">
+      <p class="eyebrow">AM ♡ PM · Capítulo II</p>
+      <h1>La primera puerta<br />fuera del trabajo.</h1>
+      <p>Este capítulo no se abre con un clic. Se abre con algo que solo nosotros sabemos.</p>
+      <form id="chapterKeyForm" autocomplete="off">
+        <div class="key-input-wrap"><input id="chapterKey" type="password" placeholder="Nuestra clave" autocomplete="off" aria-label="Clave del capítulo II" /><button type="button" id="toggleChapterKey" aria-label="Mostrar clave">◉</button></div>
+        <p class="key-error" id="chapterKeyError" aria-live="polite"></p>
+        <button class="primary-button" type="submit"><span>Abrir Capítulo II</span><span>⌁</span></button>
+      </form>
+      <small>Dos meses. Una historia. Una puerta más.</small>
+    </div>
+  </div>
+
+  <main id="chapterTwoContent" aria-hidden="true">
+    <section class="hero chapter2-hero" id="inicio">
+      <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+      <div class="hero-content reveal visible">
+        <p class="eyebrow">Nuestro segundo mes</p>
+        <div class="time-pair"><span>AM</span><i>♡</i><span>PM</span></div>
+        <h1>La primera puerta<br />fuera del trabajo.</h1>
+        <p class="hero-copy">Después de convertirnos en AM y PM, algo cambió. No de golpe. Solo lo suficiente para que lo nuestro dejara de caber dentro de un chat laboral.</p>
+        <button class="primary-button" id="openStory" type="button"><span>Abrir la puerta</span><span>↓</span></button>
+      </div>
+      <div class="chapter2-door-hero" aria-hidden="true"><div class="door-frame"><div class="door-panel"><i></i></div><div class="door-light"></div></div></div>
+    </section>
+
+    <article class="story" id="capitulo">
+      <header class="chapter-header section-shell reveal">
+        <p class="chapter-number">Capítulo II</p>
+        <h2>La primera puerta fuera del trabajo.</h2>
+        <p class="chapter-lead">Después de convertirnos en AM y PM, algo cambió.</p>
+      </header>
+
+      <section class="story-section section-shell reveal">
+        <p class="dropcap">No fue un cambio brusco.</p>
+        <p>No hubo una confesión enorme ni una frase perfecta.</p>
+        <p>Fue más bien esa sensación pequeña, casi invisible, de que lo nuestro ya no cabía del todo dentro de un chat laboral.</p>
+        <p>Seguíamos hablando por trabajo, sí.</p>
+        <div class="three-lines compact"><span>Una intención.</span><span>Una espera.</span><span>Una forma de buscarnos.</span></div>
+        <p>Unas fechas importantes se acercaban.</p>
+        <div class="date-cards"><div><small>01</small><strong>Mi cumpleaños</strong></div><div><small>02</small><strong>Mis vacaciones</strong></div><div><small>03</small><strong>La prueba</strong></div></div>
+        <p>Yo no iba a estar en la empresa durante un tiempo. Después volvería, claro, pero durante esos días desaparecería la excusa que hasta entonces nos había permitido estar cerca.</p>
+      </section>
+
+      <section class="bridge-scene reveal">
+        <p class="chapter-number">Hasta entonces</p>
+        <h3>El trabajo había sido nuestro puente.</h3>
+        <div class="bridge-visual" aria-hidden="true"><span>AM</span><i></i><b>empresa</b><i></i><span>PM</span></div>
+        <p>Pero si yo me iba de vacaciones, ese puente quedaba en silencio.</p>
+      </section>
+
+      <section class="question-scene reveal">
+        <div class="question-stack">
+          <p>¿Me buscarás fuera de aquí?</p>
+          <p>¿Me escribirás por privado?</p>
+          <p>¿Harás algo antes de que me vaya?</p>
+        </div>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Yo intentaba no darle demasiadas vueltas, pero era imposible.</p>
+        <p>Había historias que se apagan justo cuando pierden la excusa que las sostenía. Y yo no quería que la nuestra fuera una de esas.</p>
+        <p>Así que empecé a ponértelo fácil.</p>
+        <p class="emphasis">Demasiado fácil, quizá.</p>
+        <p>Te lanzaba indirectas que, siendo sinceros, cada vez tenían menos de indirectas. Eran frases disfrazadas de broma, comentarios que parecían casuales, pequeñas puertas abiertas para que tú decidieras si querías entrar.</p>
+        <div class="want-card"><span>Quería que entendieras algo muy sencillo.</span><strong>Que me interesabas.</strong><strong>Que no quería que aquello se quedara encerrado entre horarios, tareas y mensajes de empresa.</strong><strong>Que lo que estaba naciendo entre nosotros merecía al menos una oportunidad fuera de allí.</strong></div>
+        <p>Teníamos ya nuestra primera canción. Empezaban a aparecer estados de WhatsApp que yo podía ver y que, de alguna forma, sentía dirigidos a ese pequeño mundo nuestro.</p>
+        <p>Nos hacíamos preguntas cada vez más personales.</p>
+        <p>Y tú eras tú: a veces inocente, a veces imposible de leer, a veces tan natural que me hacías dudar de si realmente no entendías nada o si lo entendías todo y preferías hacerte la despistada.</p>
+      </section>
+
+      <section class="sims-scene reveal">
+        <div class="sims-console">
+          <p class="chapter-number">Crear un Sim</p>
+          <div class="sim-avatar" aria-hidden="true"><div class="plumbob">◆</div><div class="sim-head"></div><div class="sim-body"></div></div>
+          <div class="sim-copy">
+            <span>Nombre del Sim</span><strong>PM</strong>
+            <span>Estado</span><strong>¿Cómo es?</strong>
+            <div class="trait-row"><i>desconfiado</i><i>curioso</i><i>ya demasiado pillado</i></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Un día, cerca de mi salida, hablamos de juegos. Me dijiste que eras gamer. Que tenías PC. Que habías jugado a juegos conocidos.</p>
+        <p>Entonces salió Los Sims.</p>
+        <p class="emphasis">Tu juego favorito.</p>
+        <p>Yo no tardé en vacilarte. Te dije algo sobre lo curioso que era simular una vida en un ordenador, como si la vida real no tuviera ya suficiente lío.</p>
+        <p>Era una broma. Pero, como tantas bromas nuestras, tenía una segunda intención.</p>
+        <p>Porque cuando dijiste que me harías un Sim, yo vi una oportunidad.</p>
+        <p>Para hacerme un Sim necesitabas saber cómo era. Y para saber cómo era, tenías que buscarme.</p>
+        <p>No era solo curiosidad física. Era querer saber si tú también tenías ganas de descubrir quién estaba detrás de PM.</p>
+      </section>
+
+      <section class="chat-scene reveal">
+        <div class="chat-window">
+          <div class="chat-top"><span class="online-dot"></span><strong>AM</strong><small>en línea</small></div>
+          <div class="message received">Es que no sé cómo eres.</div>
+          <div class="typing muted"><i></i><i></i><i></i></div>
+          <div class="internal-thought">vale, no hay nada, colega.<br /><b>Déjalo estar.</b></div>
+          <div class="message received delayed">Te haré gordo, feo y calvo 😌</div>
+          <div class="message sent">Quiero que hagas un Sim igual que yo. Búscate la vida. Hoy en día es muy fácil stalkear a la gente…</div>
+        </div>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Yo me reí, claro.</p>
+        <p>Pero por dentro había una mezcla rara de gracia y frustración. No quería que inventaras una versión mía cualquiera.</p>
+        <p class="emphasis">Quería que me buscaras.</p>
+        <p>Quería que dieras ese paso mínimo que para mí significaba muchísimo.</p>
+        <p>Sonaba a broma. Pero no era solo una broma.</p>
+        <p>Era una invitación. Una forma torpe de decirte: mírame fuera de aquí.</p>
+      </section>
+
+      <section class="names-scene reveal">
+        <p class="chapter-number">El juego de los nombres</p>
+        <h3>Tú investigabas el mío.<br />Yo intentaba adivinar los tuyos.</h3>
+        <div class="name-pills" aria-hidden="true"><span>¿?</span><span>¿?</span><span>¿?</span></div>
+        <p>Yo te sorprendí adivinando tus tres nombres. Tú me sorprendiste mirando mi actividad en un programa laboral para encontrar el mío.</p>
+        <strong>Ahí sí vi intención.</strong>
+      </section>
+
+      <section class="nothing-scene reveal">
+        <p>Con los nombres ya en nuestro poder pensé que todo sería más fácil.</p>
+        <div class="nothing-list"><span>Ni un like.</span><span>Ni un follow.</span><span>Ni una visualización.</span></div>
+        <h3>Nada.</h3>
+        <small>Y ese nada pesaba más de lo que debería.</small>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Yo a ti ya te tenía localizada. Pero no quería ser el primero.</p>
+        <p>No por orgullo únicamente. También por miedo.</p>
+        <p>Había trabajo de por medio. Había responsabilidades. Había una línea que yo no sabía hasta qué punto podíamos cruzar.</p>
+        <div class="risk-questions"><span>¿Y si daba el paso y no era recíproco?</span><span>¿Y si lo interpretabas mal?</span><span>¿Y si por una imprudencia acababa metiéndome en un problema?</span></div>
+        <p>Mi jefe siempre me había dejado claro que no debíamos tener relación personal con las gerencias.</p>
+        <p>Y, aun así, cada vez que pensaba en alejarme, aparecías tú.</p>
+        <p>Al día siguiente llegué a la oficina con la esperanza escondida detrás de una broma. Te pregunté si ya habías hecho mi Sim noventa y nueve por ciento parecido a mí.</p>
+      </section>
+
+      <section class="quote-section reveal"><blockquote>“No te hagas María.”</blockquote><span>No te hagas la que no entiende. No me dejes solo interpretando esta historia.</span></section>
+
+      <section class="story-section section-shell reveal">
+        <p>En un momento pensé:</p>
+        <p class="emphasis">Desisto.</p>
+        <p>Pero contigo desistir nunca me duraba demasiado.</p>
+        <p>Podía decirlo con toda la dignidad del mundo, y al rato volvía a estar pendiente de tu respuesta, de tu nombre, de la manera en que una frase tuya podía cambiarme el ánimo.</p>
+        <p>Seguimos hablando durante horas. Como siempre.</p>
+        <p>Hasta que decidí dejar de rodear la puerta.</p>
+        <p>Te dije que tenías mi nombre y mi apellido. Que yo era una persona conocida en internet.</p>
+        <p>Y entonces desapareciste unos minutos.</p>
+      </section>
+
+      <section class="silence-scene reveal">
+        <div class="silence-clock"><span>00</span><i>:</i><span id="silenceSeconds">00</span></div>
+        <p>Hay silencios que no están vacíos.</p>
+        <h3>Ese no lo estaba.</h3>
+        <small>Ese silencio tenía movimiento al otro lado.</small>
+      </section>
+
+      <section class="follow-scene reveal">
+        <div class="social-notification tiktok-card">
+          <div class="social-icon">♪</div><div><small>TikTok · ahora</small><strong>AM empezó a seguirte.</strong></div>
+        </div>
+        <p>Puede parecer una tontería.</p>
+        <h3>Pero para mí no lo fue.</h3>
+        <p>Ese follow era una mano asomándose fuera del chat laboral.</p>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Era una forma de decir, sin decirlo, que también querías saber quién era yo fuera de las incidencias, fuera del trabajo, fuera de ese lugar donde nos habíamos encontrado casi por accidente.</p>
+        <p>Ese día fue demasiado para mi cabeza.</p>
+        <p>Por un lado estaba la emoción. Por otro, el miedo.</p>
+        <p>Así que lo dejé estar hasta el día siguiente. Pero aquella noche pensé mucho.</p>
+        <p>En el follow. En lo que significaba. En lo que tal vez no significaba. En si tú esperabas que yo dijera algo más.</p>
+        <p>Y al día siguiente volví a hacer lo único que sabía hacer cuando algo me importaba demasiado.</p>
+        <p class="emphasis">Convertir una petición en una broma.</p>
+      </section>
+
+      <section class="ghost-scene reveal">
+        <div class="message sent large">Sí, muy bien, tengo una follower más en TikTok, pero andas todo ghost en Insta.</div>
+        <div class="instant-line"><span>al instante</span><i></i><span>sin espacio para dudar</span></div>
+        <div class="social-notification insta-card"><div class="social-icon">◎</div><div><small>Instagram · ahora</small><strong>AM empezó a seguirte.</strong></div></div>
+        <div class="message received fan-message">Soy tu fan.</div>
+      </section>
+
+      <section class="fan-scene reveal">
+        <p>Me quedé mirando aquello como quien mira una puerta abierta.</p>
+        <div class="fan-words"><span>Ligera.</span><span>Juguetona.</span><span>Casi inocente.</span></div>
+        <h3>Pero con algo debajo.</h3>
+        <p>Lo vi al rato y pensé:</p>
+        <strong>Lo hizo.<br />Aquí estamos.</strong>
+      </section>
+
+      <section class="story-section section-shell reveal">
+        <p>Y dentro de mí algo empezó a ponerse serio.</p>
+        <p class="emphasis">Porque tú me gustabas demasiado.</p>
+        <p>Me gustaba tu personalidad. Esa mezcla tuya de inocencia, descaro, ternura y caos.</p>
+        <p>Me gustaba cómo aparecías en mis días sin pedir permiso.</p>
+        <p>Y también, claro, me atraías físicamente de una forma que me costaba ignorar.</p>
+        <div class="three-lines"><span>Demasiado bonito.</span><span>Demasiado peligroso.</span><span>Demasiado real.</span></div>
+        <p>Ese mismo día, cuando salí de la oficina, fui pensando en ti durante el camino a casa.</p>
+        <p>No quería contestar cualquier cosa. Quería mantener el juego, pero también reconocer el riesgo.</p>
+      </section>
+
+      <section class="final-chat reveal">
+        <div class="message sent danger-message">Tú quieres que me echen.</div>
+        <p>Era una broma.</p>
+        <h3>Pero también era una confesión disfrazada.</h3>
+        <p>Era decirte: sabes que esto es peligroso, y aun así aquí estamos.</p>
+      </section>
+
+      <section class="timezone-scene reveal">
+        <p class="chapter-number">La misma noche · dos relojes</p>
+        <div class="clock-pair"><div><span>PM</span><strong>España</strong><small>+6 horas</small></div><i>♡</i><div><span>AM</span><strong>Venezuela</strong><small>la misma conversación</small></div></div>
+        <p>Esa noche, tarde para ti, empezamos una historia más allá de los muros laborales.</p>
+        <small>Justo un día antes de que yo me fuera de vacaciones.</small>
+      </section>
+
+      <section class="door-finale reveal" id="puertaFinal">
+        <div class="final-door-stage">
+          <div class="final-door" id="finalDoor" role="button" tabindex="0" aria-label="Abrir la puerta final"><div class="final-door-panel"><span></span><b>AM</b></div><div class="final-door-light"></div></div>
+          <p class="tap-door">toca la puerta</p>
+        </div>
+        <div class="door-ending-copy" id="doorEndingCopy">
+          <p>Justo cuando parecía que el tiempo se acababa.</p>
+          <p>Justo cuando más necesitábamos decidir si aquello iba a quedarse en una excusa o iba a convertirse en algo nuestro.</p>
+          <h3>Y elegimos lo segundo.</h3>
+          <div class="small-beginnings"><span>Un follow.</span><span>Un mensaje.</span><span>Una broma.</span><span>Una respuesta tarde.</span></div>
+          <p>Una puerta que, por fin, alguien se atreve a abrir.</p>
+          <strong>Y para mí, aquel fue el momento en el que dejaste de existir solo dentro del trabajo.</strong>
+          <p>Fue el momento en el que AM empezó a formar parte de mi vida real.</p>
+        </div>
+      </section>
+
+      <section class="ending chapter2-ending reveal" id="final">
+        <p>La historia apenas estaba empezando.</p>
+        <h2>Pero yo ya lo sentía.</h2>
+        <p class="ending-big">Algo grande venía hacia nosotros.</p>
+        <button class="heart-button" id="heartButton" type="button" aria-label="Descubrir mensaje">♡</button>
+        <p class="secret-message" id="secretMessage">Feliz segundo mes, AM. De todas las puertas que pudiste abrir, gracias por abrir esta conmigo. 💜</p>
+        <div class="next-chapter"><span>Capítulo III</span><strong>El tiempo todavía lo está escribiendo.</strong><i>🔒</i></div>
+        <a href="index.html" class="back-top">volver a nuestros capítulos ↑</a>
+      </section>
+    </article>
+  </main>
+
+  <footer><p>AM <span>♡</span> PM</p><small>Capítulo II · La primera puerta fuera del trabajo</small></footer>
+  <script src="script.js"></script>
+</body>
+</html>
