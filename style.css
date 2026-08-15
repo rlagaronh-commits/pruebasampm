@@ -1532,3 +1532,130 @@ body.chapter-shell-open{
   .chapter-two-page .final-chat .danger-message { opacity:1!important;transform:none!important;filter:none!important;animation:none!important;transition:none!important; }
   .chapter-two-page .plumbob,.chapter-two-page .silence-clock,.chapter-two-page .status-icon-clock{animation:none!important}
 }
+
+
+/* ==========================================================
+   V13 · Capítulo II — estabilidad, ritmo y Safari iPhone
+   Rework de escenas V12: nada queda oculto por un observer fallido,
+   menos huecos verticales y transiciones de lectura más naturales.
+   ========================================================== */
+.chapter-two-page .reveal{
+  transform:translate3d(0,18px,0);
+  transition:opacity .72s cubic-bezier(.22,.75,.2,1),transform .78s cubic-bezier(.22,.75,.2,1);
+}
+.chapter-two-page .reveal.visible{transform:none}
+
+/* Conversación: el primer mensaje de AM siempre entra primero. */
+.chapter-two-page .chat-window .first-message{
+  opacity:0;
+  transform:translate3d(-18px,10px,0) scale(.985);
+}
+.chapter-two-page .chat-scene.scene-activated .chat-window .first-message{
+  opacity:1;
+  transform:none;
+  transition-delay:.08s;
+}
+.chapter-two-page .chat-scene.scene-activated .chat-window .typing{transition-delay:.62s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .internal-thought{transition-delay:1.18s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .message.delayed{transition-delay:1.82s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .message.sent{transition-delay:2.42s}
+
+/* No volver a ocultar accidentalmente la primera burbuja con nth-of-type. */
+.chapter-two-page .chat-scene.scene-activated .chat-window > .message.received:not(.delayed){opacity:1;transform:none}
+
+/* Preguntas de riesgo: legibles siempre; al entrar se iluminan de forma secuencial. */
+.chapter-two-page .risk-questions span{
+  opacity:.72;
+  color:#eadff2;
+  transform:translate3d(-8px,0,0);
+  border-left-color:rgba(255,142,216,.55);
+  background:linear-gradient(90deg,rgba(255,142,216,.085),rgba(158,99,255,.025) 58%,transparent);
+}
+.chapter-two-page .risk-story.visible .risk-questions span{
+  opacity:1;
+  transform:none;
+  color:#f8f2ff;
+}
+.chapter-two-page .risk-story.visible .risk-questions span:nth-child(1){transition-delay:.08s}
+.chapter-two-page .risk-story.visible .risk-questions span:nth-child(2){transition-delay:.2s}
+.chapter-two-page .risk-story.visible .risk-questions span:nth-child(3){transition-delay:.32s}
+
+/* La escena de silencio conserva tensión sin obligar a atravesar un vacío enorme. */
+.chapter-two-page .silence-scene{min-height:540px;padding:52px 22px}
+.chapter-two-page .silence-scene .silence-clock{margin-bottom:24px}
+.chapter-two-page .follow-scene{min-height:560px;padding:54px 24px}
+.chapter-two-page .ghost-scene{min-height:650px;padding:50px 26px}
+.chapter-two-page .fan-scene{min-height:590px;padding:58px 26px}
+.chapter-two-page .final-chat{min-height:570px;padding:54px 26px}
+.chapter-two-page .timezone-scene{min-height:590px;padding:58px 26px}
+.chapter-two-page .nothing-scene{min-height:76svh;padding:62px 26px}
+.chapter-two-page .question-scene{min-height:82svh;padding:54px 22px}
+.chapter-two-page .chat-scene{min-height:600px;padding:44px 0}
+.chapter-two-page .names-scene{min-height:610px;padding-top:62px;padding-bottom:62px}
+.chapter-two-page .sims-scene{min-height:570px;padding:44px 0}
+.chapter-two-page .bridge-scene{min-height:560px;padding-top:58px;padding-bottom:58px}
+
+/* Microtransiciones más suaves, menos sensación de elementos que desaparecen. */
+.chapter-two-page .question-stack p{filter:blur(2px);transition-duration:.68s,.74s,.6s,.3s}
+.chapter-two-page .nothing-list span{transition-duration:.52s}
+.chapter-two-page .nothing-scene h3{filter:blur(3px)}
+.chapter-two-page .social-notification{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+
+@media(max-width:720px){
+  .chapter-two-page .bridge-scene,
+  .chapter-two-page .question-scene,
+  .chapter-two-page .sims-scene,
+  .chapter-two-page .chat-scene,
+  .chapter-two-page .names-scene,
+  .chapter-two-page .nothing-scene,
+  .chapter-two-page .silence-scene,
+  .chapter-two-page .follow-scene,
+  .chapter-two-page .ghost-scene,
+  .chapter-two-page .fan-scene,
+  .chapter-two-page .final-chat,
+  .chapter-two-page .timezone-scene,
+  .chapter-two-page .door-finale{
+    width:calc(100% - 28px);
+    margin-block:42px;
+    border-radius:28px;
+  }
+  .chapter-two-page .story-section{padding-block:24px}
+  .chapter-two-page .story-section p{margin-bottom:1.22em}
+  .chapter-two-page .chat-scene{min-height:auto;padding:30px 0}
+  .chapter-two-page .chat-window{width:calc(100% - 12px);padding:14px;border-radius:26px}
+  .chapter-two-page .internal-thought{padding:30px 10px}
+  .chapter-two-page .message{margin-block:11px;line-height:1.35}
+  .chapter-two-page .risk-questions{margin:34px 0;gap:8px}
+  .chapter-two-page .risk-questions span{padding:15px 16px;font-size:1.28rem;line-height:1.35}
+  .chapter-two-page .silence-scene{min-height:64svh;padding:42px 18px}
+  .chapter-two-page .follow-scene{min-height:auto;padding:48px 18px}
+  .chapter-two-page .ghost-scene{min-height:auto;padding:48px 18px}
+  .chapter-two-page .fan-scene{min-height:auto;padding:48px 18px}
+  .chapter-two-page .final-chat{min-height:auto;padding:48px 18px}
+  .chapter-two-page .timezone-scene{min-height:auto;padding:48px 18px}
+  .chapter-two-page .nothing-scene{min-height:68svh;padding:50px 18px}
+  .chapter-two-page .question-scene{min-height:72svh;padding:46px 18px}
+  .chapter-two-page .question-stack{gap:19px}
+  .chapter-two-page .question-stack p{font-size:clamp(2.35rem,11.5vw,4.2rem);line-height:.98}
+  .chapter-two-page .names-scene{min-height:auto;padding:54px 18px}
+  .chapter-two-page .sims-scene{min-height:auto;padding:42px 0}
+  .chapter-two-page .bridge-scene{min-height:auto;padding:52px 20px}
+  .chapter-two-page .instant-line{margin-block:38px}
+  .chapter-two-page .fan-message{margin-top:28px!important}
+  .chapter-two-page .clock-pair{margin-block:38px}
+}
+
+/* Fallback de seguridad: si JS se desactiva, el contenido nunca queda ilegible. */
+html.no-js .chapter-two-page .chat-window .message,
+html.no-js .chapter-two-page .chat-window .typing,
+html.no-js .chapter-two-page .chat-window .internal-thought,
+html.no-js .chapter-two-page .risk-questions span,
+html.no-js .chapter-two-page .nothing-list span,
+html.no-js .chapter-two-page .nothing-scene h3,
+html.no-js .chapter-two-page .nothing-scene small,
+html.no-js .chapter-two-page .ghost-scene > *,
+html.no-js .chapter-two-page .follow-scene .tiktok-card,
+html.no-js .chapter-two-page .fan-words span,
+html.no-js .chapter-two-page .final-chat .danger-message{
+  opacity:1!important;transform:none!important;filter:none!important;
+}

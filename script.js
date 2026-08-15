@@ -1,3 +1,4 @@
+document.documentElement.classList.remove('no-js');
 // AM & PM · Nuestra historia
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
@@ -451,13 +452,22 @@ if (new URLSearchParams(location.search).get('embedded') === '1' && window.paren
   if ('IntersectionObserver' in window && !reduceMotion) {
     const sceneObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= .24) {
+        if (entry.isIntersecting) {
           requestAnimationFrame(() => activate(entry.target));
           sceneObserver.unobserve(entry.target);
         }
       });
-    }, { threshold:[.14,.24,.42], rootMargin:'0px 0px -6% 0px' });
+    }, { threshold:[.06,.14], rootMargin:'0px 0px -3% 0px' });
     scenes.forEach(scene => sceneObserver.observe(scene));
+    // Safari Web App can restore scroll before IntersectionObserver settles.
+    // Reveal any scene that is already close to the viewport so nothing remains hidden.
+    window.setTimeout(() => {
+      scenes.forEach(scene => {
+        if (scene.classList.contains('scene-activated')) return;
+        const r = scene.getBoundingClientRect();
+        if (r.top < window.innerHeight * 1.12 && r.bottom > -80) activate(scene);
+      });
+    }, 320);
   } else {
     scenes.forEach(activate);
   }
