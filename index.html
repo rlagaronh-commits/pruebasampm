@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c0517" />
+  <meta name="description" content="AM & PM — Nuestra historia, capítulo a capítulo." />
+  <title>AM & PM · Nuestra historia</title>
+  <link rel="icon" href="assets/heart.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="library-page">
+  <div class="noise" aria-hidden="true"></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <button class="sound-toggle" id="soundToggle" type="button" aria-label="Activar ambiente">
+    <span class="sound-icon">♫</span><span class="sound-label">ambiente</span>
+  </button>
+
+  <main>
+    <section class="library-hero" id="inicio">
+      <div class="library-hero-inner reveal visible">
+        <p class="eyebrow">AM ♡ PM · Nuestra historia</p>
+        <p class="month-mark">DOS MESES</p>
+        <h1>La historia<br />continúa.</h1>
+        <p>Hace un mes abrimos el primero. Hoy hay otra puerta esperando.</p>
+        <a class="primary-button" href="#biblioteca"><span>Ver nuestros capítulos</span><span>↓</span></a>
+      </div>
+      <div class="orbit-mark" aria-hidden="true"><span>AM</span><i>♡</i><span>PM</span></div>
+    </section>
+
+    <section class="chapter-library section-wide" id="biblioteca">
+      <header class="library-heading reveal">
+        <p class="chapter-number">Nuestra biblioteca</p>
+        <h2>Dos capítulos.<br />Una sola historia.</h2>
+        <p>El primero siempre estará aquí. El segundo, como las cosas importantes, tiene su propia llave.</p>
+      </header>
+
+      <div class="chapter-grid">
+        <a class="chapter-card chapter-one reveal" href="capitulo-1.html">
+          <span class="chapter-chip">Capítulo I</span>
+          <div class="chapter-art chapter-art-one" aria-hidden="true"><span>AM</span><i>♡</i><span>PM</span></div>
+          <div class="chapter-card-copy">
+            <h3>Dos mundos empezaron a rozarse.</h3>
+            <p>Donde todo empezó: trabajo, VIP, una foto de perfil y un idioma que acabó siendo solo nuestro.</p>
+            <span class="chapter-action">Volver a leer →</span>
+          </div>
+        </a>
+
+        <button class="chapter-card chapter-two reveal" id="chapterTwoCard" type="button" aria-haspopup="dialog">
+          <span class="chapter-chip"><i class="mini-lock">⌁</i> Capítulo II</span>
+          <div class="chapter-art door-mini" aria-hidden="true"><div class="mini-door"><span></span></div></div>
+          <div class="chapter-card-copy">
+            <h3>La primera puerta fuera del trabajo.</h3>
+            <p>Unas vacaciones, Los Sims, dos follows y el instante en que AM dejó de existir solo dentro del trabajo.</p>
+            <span class="chapter-action">Abrir con nuestra clave →</span>
+          </div>
+        </button>
+
+        <div class="chapter-card coming-soon reveal" aria-disabled="true">
+          <span class="chapter-chip">Capítulo III</span>
+          <div class="chapter-art constellation" aria-hidden="true">✦</div>
+          <div class="chapter-card-copy">
+            <h3>Todavía no está escrito.</h3>
+            <p>Hay páginas que solo el tiempo puede escribir.</p>
+            <span class="chapter-action">Próximamente</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="two-months-note section-shell reveal">
+      <p>Un mes fue el comienzo.</p>
+      <h2>Dos meses ya empiezan a parecer una historia.</h2>
+      <div class="time-thread"><span>España · PM</span><i></i><b>♡</b><i></i><span>Venezuela · AM</span></div>
+    </section>
+  </main>
+
+  <footer><p>AM <span>♡</span> PM</p><small>Dos meses · Y seguimos escribiendo</small></footer>
+
+  <div class="key-modal" id="keyModal" role="dialog" aria-modal="true" aria-labelledby="keyTitle" hidden>
+    <div class="key-backdrop" data-close-key></div>
+    <div class="key-panel">
+      <button class="modal-close" type="button" data-close-key aria-label="Cerrar">×</button>
+      <div class="key-symbol" aria-hidden="true">⌁</div>
+      <p class="chapter-number">Capítulo II · Acceso privado</p>
+      <h2 id="keyTitle">Hay puertas que solo se abren con algo nuestro.</h2>
+      <p class="key-hint">Escribe la clave que guarda este capítulo.</p>
+      <form id="keyForm" autocomplete="off">
+        <label class="sr-only" for="storyKey">Clave del capítulo</label>
+        <div class="key-input-wrap"><input id="storyKey" type="password" inputmode="text" placeholder="Nuestra clave" autocomplete="off" /><button type="button" id="toggleKey" aria-label="Mostrar clave">◉</button></div>
+        <p class="key-error" id="keyError" aria-live="polite"></p>
+        <button class="primary-button key-submit" type="submit"><span>Abrir la puerta</span><span>→</span></button>
+      </form>
+      <small>Una pista: está escrito como lo diríamos nosotros.</small>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
