@@ -1313,3 +1313,222 @@ body.chapter-shell-open{
 @media(prefers-reduced-motion:reduce){
   .chapter-app-shell{transition:none}
 }
+
+/* ==========================================================
+   V12 · Capítulo II vivo — microinteracciones y escenas únicas
+   Safari/iPhone first: solo transform/opacity para mantener 60fps.
+   ========================================================== */
+.chapter-two-page .bridge-scene,
+.chapter-two-page .question-scene,
+.chapter-two-page .sims-scene,
+.chapter-two-page .chat-scene,
+.chapter-two-page .names-scene,
+.chapter-two-page .nothing-scene,
+.chapter-two-page .silence-scene,
+.chapter-two-page .follow-scene,
+.chapter-two-page .ghost-scene,
+.chapter-two-page .fan-scene,
+.chapter-two-page .final-chat,
+.chapter-two-page .timezone-scene,
+.chapter-two-page .door-finale {
+  position:relative;
+  isolation:isolate;
+}
+.chapter-two-page .interactive-scene {
+  -webkit-tap-highlight-color:transparent;
+}
+.chapter-two-page .tap-affordance {
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.chapter-two-page .tap-affordance:focus-visible {
+  outline:1px solid rgba(255,170,224,.55);
+  outline-offset:6px;
+}
+
+/* Bridge — the line draws itself and reacts to a tap. */
+.chapter-two-page .bridge-visual i {
+  transform:scaleX(0);
+  transform-origin:center;
+  opacity:.25;
+  transition:transform .9s cubic-bezier(.2,.75,.2,1), opacity .9s ease;
+}
+.chapter-two-page .bridge-visual b,
+.chapter-two-page .bridge-visual span {
+  opacity:.38;
+  transform:translateY(8px);
+  transition:opacity .55s ease,transform .55s ease,text-shadow .55s ease;
+}
+.chapter-two-page .bridge-scene.scene-activated .bridge-visual i { transform:scaleX(1); opacity:1; }
+.chapter-two-page .bridge-scene.scene-activated .bridge-visual span { opacity:1; transform:none; }
+.chapter-two-page .bridge-scene.scene-activated .bridge-visual b { opacity:1; transform:none; transition-delay:.35s; }
+.chapter-two-page .bridge-scene.bridge-pulse .bridge-visual b { text-shadow:0 0 24px rgba(255,142,216,.9); }
+.chapter-two-page .bridge-scene.bridge-pulse .bridge-visual i { animation:bridgeSignal .8s ease 2; }
+@keyframes bridgeSignal { 50%{opacity:.22;filter:drop-shadow(0 0 8px rgba(211,157,255,.85))} }
+
+/* Questions — each question arrives as a thought, then tap cycles focus. */
+.chapter-two-page .question-stack p {
+  opacity:0;
+  transform:translate3d(0,28px,0) scale(.98);
+  filter:blur(4px);
+  transition:opacity .75s ease,transform .85s cubic-bezier(.2,.8,.2,1),filter .75s ease,color .35s ease;
+}
+.chapter-two-page .question-scene.scene-activated .question-stack p { opacity:1;transform:none;filter:none; }
+.chapter-two-page .question-scene.scene-activated .question-stack p:nth-child(2){transition-delay:.22s}
+.chapter-two-page .question-scene.scene-activated .question-stack p:nth-child(3){transition-delay:.44s}
+.chapter-two-page .question-stack p.question-focus { color:#f4b3df; text-shadow:0 0 30px rgba(242,146,213,.22); transform:scale(1.025); }
+
+/* Sims — interactive plumbob and traits. */
+.chapter-two-page .sims-console { overflow:hidden; }
+.chapter-two-page .sims-console::after {
+  content:"";position:absolute;inset:-35%;pointer-events:none;
+  background:conic-gradient(from 180deg,transparent 0 42%,rgba(176,97,255,.10) 48%,transparent 54% 100%);
+  opacity:0;transform:rotate(-35deg);transition:opacity .5s ease;
+}
+.chapter-two-page .sims-scene.scene-activated .sims-console::after { opacity:1;animation:simScan 5.5s linear infinite; }
+@keyframes simScan { to{transform:rotate(325deg)} }
+.chapter-two-page .plumbob { transform:translateY(-8px) rotate(45deg) scale(.78);opacity:.35;transition:.7s cubic-bezier(.2,.85,.2,1); }
+.chapter-two-page .sims-scene.scene-activated .plumbob { opacity:1;transform:translateY(0) rotate(45deg) scale(1);animation:plumbobFloat 2.6s ease-in-out infinite; }
+@keyframes plumbobFloat { 50%{transform:translateY(-9px) rotate(225deg) scale(1.07);filter:drop-shadow(0 0 12px rgba(159,255,189,.55))} }
+.chapter-two-page .trait-row i { transition:transform .35s ease,box-shadow .35s ease,color .35s ease; }
+.chapter-two-page .sims-scene.sim-boost .trait-row i { animation:traitPop .72s cubic-bezier(.2,.8,.2,1) both; }
+.chapter-two-page .sims-scene.sim-boost .trait-row i:nth-child(2){animation-delay:.09s}.chapter-two-page .sims-scene.sim-boost .trait-row i:nth-child(3){animation-delay:.18s}
+@keyframes traitPop { 50%{transform:translateY(-5px) scale(1.055);box-shadow:0 10px 28px rgba(142,77,214,.22);color:#fff} }
+
+/* Chat — behaves like a conversation instead of static bubbles. */
+.chapter-two-page .chat-window .message,
+.chapter-two-page .chat-window .typing,
+.chapter-two-page .chat-window .internal-thought {
+  opacity:0;
+  transform:translate3d(0,18px,0) scale(.97);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1),filter .5s ease;
+}
+.chapter-two-page .chat-window .received { transform:translate3d(-22px,12px,0) scale(.97); }
+.chapter-two-page .chat-window .sent { transform:translate3d(22px,12px,0) scale(.97); }
+.chapter-two-page .chat-scene.scene-activated .chat-window .message:nth-of-type(1){opacity:1;transform:none;transition-delay:.1s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .typing{opacity:1;transform:none;transition-delay:.72s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .internal-thought{opacity:1;transform:none;transition-delay:1.35s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .message.delayed{opacity:1;transform:none;transition-delay:2.15s}
+.chapter-two-page .chat-scene.scene-activated .chat-window .message.sent{opacity:1;transform:none;transition-delay:2.85s}
+.chapter-two-page .message.message-reacted { animation:messageReact .55s cubic-bezier(.2,.8,.2,1); }
+@keyframes messageReact { 45%{transform:scale(1.025)} }
+.chapter-two-page .tap-reaction {
+  position:absolute;z-index:40;min-width:42px;height:32px;padding:0 10px;border-radius:999px;
+  display:grid;place-items:center;background:rgba(54,22,80,.94);border:1px solid rgba(255,184,231,.35);
+  box-shadow:0 12px 30px rgba(0,0,0,.35),0 0 24px rgba(235,126,206,.18);
+  color:#ff9cda;font:600 .84rem var(--sans);pointer-events:none;
+  animation:reactionRise 1.35s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes reactionRise { 0%{opacity:0;transform:translate(-50%,4px) scale(.7)} 25%{opacity:1;transform:translate(-50%,-8px) scale(1.08)} 100%{opacity:0;transform:translate(-50%,-44px) scale(.9)} }
+
+/* Names — existing reveal plus a tap sparkle. */
+.chapter-two-page .name-pill { cursor:pointer; }
+.chapter-two-page .name-pill.name-tapped { animation:nameTap .7s cubic-bezier(.2,.8,.2,1); }
+@keyframes nameTap { 40%{transform:translateY(-6px) scale(1.055);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 0 40px rgba(255,139,215,.27)} }
+
+/* Nothing — items disappear before Nada lands. */
+.chapter-two-page .nothing-list span { opacity:0;transform:translateY(12px);transition:.45s ease; }
+.chapter-two-page .nothing-scene h3 { opacity:0;transform:scale(.78);filter:blur(7px);transition:.7s cubic-bezier(.15,.9,.2,1); }
+.chapter-two-page .nothing-scene small { opacity:0;transform:translateY(8px);transition:.55s ease; }
+.chapter-two-page .nothing-scene.scene-activated .nothing-list span{opacity:1;transform:none}
+.chapter-two-page .nothing-scene.scene-activated .nothing-list span:nth-child(2){transition-delay:.18s}.chapter-two-page .nothing-scene.scene-activated .nothing-list span:nth-child(3){transition-delay:.36s}
+.chapter-two-page .nothing-scene.scene-activated h3{opacity:1;transform:none;filter:none;transition-delay:.78s}
+.chapter-two-page .nothing-scene.scene-activated small{opacity:1;transform:none;transition-delay:1.12s}
+.chapter-two-page .nothing-scene.nothing-tapped h3 { animation:nothingEcho .85s ease; }
+@keyframes nothingEcho { 50%{letter-spacing:.08em;text-shadow:0 0 36px rgba(210,159,255,.32)} }
+
+/* Risk questions cascade. */
+.chapter-two-page .risk-questions span { opacity:.2;transform:translateX(-12px);transition:.55s ease; }
+.chapter-two-page .story-section.scene-activated .risk-questions span { opacity:1;transform:none; }
+.chapter-two-page .story-section.scene-activated .risk-questions span:nth-child(2){transition-delay:.16s}.chapter-two-page .story-section.scene-activated .risk-questions span:nth-child(3){transition-delay:.32s}
+
+/* Silence — breathe in/out, tap makes the clock freeze for one beat. */
+.chapter-two-page .silence-clock { transition:filter .4s ease,transform .4s ease; }
+.chapter-two-page .silence-scene.scene-activated .silence-clock { animation:silenceBreath 3s ease-in-out infinite; }
+@keyframes silenceBreath { 50%{transform:scale(1.025);filter:drop-shadow(0 0 25px rgba(180,121,235,.18))} }
+.chapter-two-page .silence-scene.clock-tapped .silence-clock{animation:silenceTap .8s ease}
+@keyframes silenceTap { 35%{transform:scale(.96);opacity:.6} 65%{transform:scale(1.045)} }
+
+/* Social follows — native-like notification entrances. */
+.chapter-two-page .social-notification { will-change:transform,opacity; }
+.chapter-two-page .follow-scene .tiktok-card { opacity:0;transform:translate3d(0,-24px,0) scale(.94); }
+.chapter-two-page .follow-scene.scene-activated .tiktok-card { animation:socialDrop .82s cubic-bezier(.18,.9,.2,1) .12s both; }
+@keyframes socialDrop { 0%{opacity:0;transform:translate3d(0,-24px,0) scale(.94)} 65%{opacity:1;transform:translate3d(0,4px,0) scale(1.015)} 100%{opacity:1;transform:none} }
+.chapter-two-page .social-notification.social-tapped { animation:socialBuzz .52s ease; }
+@keyframes socialBuzz { 20%,60%{transform:translateX(-3px)} 40%,80%{transform:translateX(3px)} }
+
+/* Ghost/Instagram — message -> instant line -> notification -> fan message. */
+.chapter-two-page .ghost-scene > * { opacity:0; }
+.chapter-two-page .ghost-scene .message.sent.large{transform:translateX(28px)}
+.chapter-two-page .ghost-scene .instant-line{transform:scaleX(.72)}
+.chapter-two-page .ghost-scene .insta-card{transform:translateY(-18px) scale(.95)}
+.chapter-two-page .ghost-scene .fan-message{transform:translateX(-24px)}
+.chapter-two-page .ghost-scene.scene-activated .message.sent.large{animation:ghostStep .62s cubic-bezier(.2,.8,.2,1) .08s both}
+.chapter-two-page .ghost-scene.scene-activated .instant-line{animation:ghostStep .62s ease .82s both}
+.chapter-two-page .ghost-scene.scene-activated .insta-card{animation:socialDrop .74s cubic-bezier(.18,.9,.2,1) 1.38s both}
+.chapter-two-page .ghost-scene.scene-activated .fan-message{animation:ghostStep .62s cubic-bezier(.2,.8,.2,1) 2.18s both}
+@keyframes ghostStep { to{opacity:1;transform:none} }
+.chapter-two-page .fan-message.fan-tapped { box-shadow:0 12px 40px rgba(255,115,209,.22);animation:fanTap .72s cubic-bezier(.2,.8,.2,1); }
+@keyframes fanTap { 45%{transform:rotate(-1.5deg) scale(1.045)} }
+
+/* Fan words reveal one by one. */
+.chapter-two-page .fan-words span { opacity:0;transform:translateY(18px);transition:.58s ease; }
+.chapter-two-page .fan-scene.scene-activated .fan-words span{opacity:1;transform:none}.chapter-two-page .fan-scene.scene-activated .fan-words span:nth-child(2){transition-delay:.18s}.chapter-two-page .fan-scene.scene-activated .fan-words span:nth-child(3){transition-delay:.36s}
+
+/* Final chat. */
+.chapter-two-page .final-chat .danger-message { opacity:0;transform:translateX(32px) rotate(1deg); }
+.chapter-two-page .final-chat.scene-activated .danger-message { animation:dangerArrive .8s cubic-bezier(.18,.9,.2,1) .12s both; }
+@keyframes dangerArrive { 0%{opacity:0;transform:translateX(32px) rotate(1deg)} 70%{opacity:1;transform:translateX(-4px) rotate(-.5deg)} 100%{opacity:1;transform:none} }
+.chapter-two-page .final-chat.danger-tapped .danger-message { box-shadow:0 18px 50px rgba(255,102,182,.24); }
+
+/* Time zones — tap the heart to send a pulse from PM to AM. */
+.chapter-two-page .clock-pair { position:relative;overflow:visible; }
+.chapter-two-page .clock-pair > i { cursor:pointer;position:relative;z-index:3;transition:.3s ease; }
+.chapter-two-page .clock-pair::after {
+  content:"";position:absolute;left:19%;right:19%;top:50%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(217,166,255,.52),rgba(255,151,218,.8),rgba(217,166,255,.52),transparent);
+  opacity:0;transform:scaleX(.2);pointer-events:none;
+}
+.chapter-two-page .timezone-scene.scene-activated .clock-pair::after{animation:timezoneLine 1.1s ease .4s both}
+@keyframes timezoneLine { to{opacity:.55;transform:scaleX(1)} }
+.chapter-two-page .timezone-scene.time-pulse .clock-pair::after { animation:timePulse 1.2s ease; }
+.chapter-two-page .timezone-scene.time-pulse .clock-pair > i { animation:heartTravel .9s cubic-bezier(.2,.8,.2,1); }
+@keyframes timePulse { 0%{opacity:.2;transform:scaleX(.2)} 50%{opacity:1;box-shadow:0 0 20px rgba(255,144,216,.45)} 100%{opacity:.45;transform:scaleX(1)} }
+@keyframes heartTravel { 50%{transform:scale(1.35);text-shadow:0 0 28px rgba(255,134,212,.9)} }
+
+/* Door ending — sparkle burst on open. */
+.chapter-two-page .door-finale .door-spark {
+  position:absolute;z-index:20;pointer-events:none;color:#ff9cda;font:1rem var(--serif);
+  animation:doorSpark 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes doorSpark { to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.4)} }
+
+/* Small visual hint only after user has interacted once — no intrusive instruction. */
+.chapter-two-page .interactive-hint {
+  position:absolute;right:16px;bottom:14px;z-index:8;color:rgba(231,208,244,.45);
+  font:600 .48rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  opacity:0;transform:translateY(5px);transition:.45s ease;pointer-events:none;
+}
+.chapter-two-page .scene-activated:hover .interactive-hint,
+.chapter-two-page .scene-activated:focus-within .interactive-hint{opacity:1;transform:none}
+
+@media (max-width:700px){
+  .chapter-two-page .tap-reaction{height:30px;min-width:38px;font-size:.78rem}
+  .chapter-two-page .interactive-hint{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .chapter-two-page .bridge-visual i,
+  .chapter-two-page .question-stack p,
+  .chapter-two-page .chat-window .message,
+  .chapter-two-page .chat-window .typing,
+  .chapter-two-page .chat-window .internal-thought,
+  .chapter-two-page .nothing-list span,
+  .chapter-two-page .nothing-scene h3,
+  .chapter-two-page .nothing-scene small,
+  .chapter-two-page .fan-words span,
+  .chapter-two-page .ghost-scene > *,
+  .chapter-two-page .follow-scene .tiktok-card,
+  .chapter-two-page .final-chat .danger-message { opacity:1!important;transform:none!important;filter:none!important;animation:none!important;transition:none!important; }
+  .chapter-two-page .plumbob,.chapter-two-page .silence-clock,.chapter-two-page .status-icon-clock{animation:none!important}
+}

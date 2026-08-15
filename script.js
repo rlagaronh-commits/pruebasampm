@@ -427,3 +427,165 @@ if (new URLSearchParams(location.search).get('embedded') === '1' && window.paren
     });
   });
 }
+
+/* ==========================================================
+   V12 · Capítulo II vivo
+   Cada dinámica importante tiene entrada propia + interacción táctil.
+   ========================================================== */
+(() => {
+  if (!document.body.classList.contains('chapter-two-page')) return;
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const q = (s, root=document) => root.querySelector(s);
+  const qa = (s, root=document) => Array.from(root.querySelectorAll(s));
+
+  const interactiveSelectors = [
+    '.bridge-scene','.question-scene','.sims-scene','.chat-scene','.names-scene',
+    '.nothing-scene','.silence-scene','.follow-scene','.ghost-scene','.fan-scene',
+    '.final-chat','.timezone-scene','.door-finale'
+  ];
+  const scenes = qa(interactiveSelectors.join(','));
+  scenes.forEach(scene => scene.classList.add('interactive-scene'));
+
+  // Independent scene timelines. Generic .reveal still handles the surrounding prose.
+  const activate = (scene) => scene.classList.add('scene-activated');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const sceneObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= .24) {
+          requestAnimationFrame(() => activate(entry.target));
+          sceneObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:[.14,.24,.42], rootMargin:'0px 0px -6% 0px' });
+    scenes.forEach(scene => sceneObserver.observe(scene));
+  } else {
+    scenes.forEach(activate);
+  }
+
+  const makeTappable = (el, label, fn) => {
+    if (!el) return;
+    el.classList.add('tap-affordance');
+    if (!/^(BUTTON|A|INPUT)$/.test(el.tagName)) {
+      el.setAttribute('role','button');
+      el.setAttribute('tabindex','0');
+      if (label) el.setAttribute('aria-label',label);
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(e); }
+      });
+    }
+    el.addEventListener('click', fn);
+  };
+
+  const restartClass = (el, cls, ms=900) => {
+    if (!el) return;
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+    window.setTimeout(() => el.classList.remove(cls), ms);
+  };
+
+  const burst = (origin, chars=['✦','♡','·'], count=9) => {
+    if (!origin || reduceMotion) return;
+    const rect = origin.getBoundingClientRect();
+    for (let i=0;i<count;i++) {
+      const star = document.createElement('span');
+      star.className = 'door-spark';
+      star.textContent = chars[i % chars.length];
+      star.style.left = `${rect.left + rect.width/2 + window.scrollX}px`;
+      star.style.top = `${rect.top + rect.height/2 + window.scrollY}px`;
+      star.style.setProperty('--dx', `${(Math.random()-.5)*150}px`);
+      star.style.setProperty('--dy', `${-35-Math.random()*115}px`);
+      star.style.setProperty('--rot', `${(Math.random()-.5)*180}deg`);
+      document.body.appendChild(star);
+      window.setTimeout(() => star.remove(), 1500);
+    }
+  };
+
+  // 1) The work bridge sends a pulse when touched.
+  const bridge = q('.bridge-scene');
+  makeTappable(q('.bridge-visual'), 'Hacer latir el puente entre AM y PM', () => restartClass(bridge,'bridge-pulse',1700));
+
+  // 2) Thoughts can be stepped through with each tap.
+  const questionScene = q('.question-scene');
+  const questions = qa('.question-stack p', questionScene || document);
+  let questionIndex = -1;
+  makeTappable(q('.question-stack'), 'Recorrer las tres preguntas', () => {
+    questionIndex = (questionIndex + 1) % Math.max(questions.length,1);
+    questions.forEach((p,i) => p.classList.toggle('question-focus', i === questionIndex));
+  });
+
+  // 3) Sims console: tap the plumbob/console and the traits react.
+  const simsScene = q('.sims-scene');
+  makeTappable(q('.sims-console'), 'Animar el Sim de PM', () => {
+    restartClass(simsScene,'sim-boost',950);
+    burst(q('.plumbob'), ['◆','✦','·'],7);
+  });
+
+  // 4) Every chat message accepts a tiny heart reaction.
+  const chatWindow = q('.chat-window');
+  qa('.chat-window .message').forEach(message => {
+    makeTappable(message, 'Reaccionar a este mensaje', (event) => {
+      restartClass(message,'message-reacted',650);
+      const reaction = document.createElement('span');
+      reaction.className = 'tap-reaction'; reaction.textContent = '♡';
+      const host = chatWindow || message.parentElement;
+      const hostRect = host.getBoundingClientRect();
+      const msgRect = message.getBoundingClientRect();
+      reaction.style.left = `${msgRect.left - hostRect.left + msgRect.width*.72}px`;
+      reaction.style.top = `${msgRect.top - hostRect.top + 4}px`;
+      host.style.position = 'relative'; host.appendChild(reaction);
+      window.setTimeout(() => reaction.remove(), 1400);
+    });
+  });
+
+  // 5) Names already reveal on scroll; each one sparkles when touched.
+  qa('.name-pill').forEach(pill => makeTappable(pill, `Animar ${q('b',pill)?.textContent || 'nombre'}`, () => {
+    restartClass(pill,'name-tapped',760); burst(pill,['✦','♡'],5);
+  }));
+
+  // 6) Nada: tap to make the word echo once.
+  const nothingScene = q('.nothing-scene');
+  makeTappable(q('.nothing-scene h3'), 'Hacer eco de Nada', () => restartClass(nothingScene,'nothing-tapped',950));
+
+  // 7) Silence clock: one deliberate beat.
+  const silence = q('.silence-scene');
+  makeTappable(q('.silence-clock'), 'Tocar el reloj del silencio', () => restartClass(silence,'clock-tapped',900));
+
+  // 8) TikTok notification buzzes and releases a tiny signal.
+  const tiktokCard = q('.tiktok-card');
+  makeTappable(tiktokCard, 'Animar la notificación de TikTok', () => {
+    restartClass(tiktokCard,'social-tapped',620); burst(tiktokCard,['♪','✦','♡'],8);
+  });
+
+  // 9) Instagram notification + Soy tu fan both react independently.
+  const instaCard = q('.insta-card');
+  makeTappable(instaCard, 'Animar la notificación de Instagram', () => {
+    restartClass(instaCard,'social-tapped',620); burst(instaCard,['◎','✦','♡'],7);
+  });
+  const fanMessage = q('.fan-message');
+  makeTappable(fanMessage, 'Reaccionar a Soy tu fan', () => {
+    restartClass(fanMessage,'fan-tapped',800); burst(fanMessage,['♡','♥','✦'],10);
+  });
+
+  // 10) Final risky message gets a restrained glow on tap.
+  const finalChat = q('.final-chat');
+  makeTappable(q('.danger-message'), 'Destacar la confesión disfrazada', () => restartClass(finalChat,'danger-tapped',1100));
+
+  // 11) Time zone heart sends a visual pulse between both worlds.
+  const timezone = q('.timezone-scene');
+  const timeHeart = q('.clock-pair > i');
+  makeTappable(timeHeart, 'Enviar un latido entre España y Venezuela', () => {
+    restartClass(timezone,'time-pulse',1300); burst(timeHeart,['♡','✦'],8);
+  });
+
+  // 12) Enhance the existing final door with a sparkle burst, without replacing its logic.
+  const door = q('#finalDoor');
+  door?.addEventListener('click', () => burst(door,['✦','♡','·'],14));
+
+  // Tiny haptics when available in the installed Web App / supported browsers.
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('.tap-affordance,#finalDoor,.heart-button') && navigator.vibrate) {
+      try { navigator.vibrate(8); } catch (_) {}
+    }
+  }, { passive:true });
+})();
