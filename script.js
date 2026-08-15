@@ -326,3 +326,21 @@ function stopAmbientSound() {
   soundToggle?.classList.remove('active'); soundToggle?.setAttribute('aria-label','Activar ambiente');
 }
 soundToggle?.addEventListener('click', () => isPlaying ? stopAmbientSound() : startAmbientSound());
+
+// El juego de los nombres: al llegar con el swipe/scroll, las tres
+// interrogaciones se transforman una sola vez en María · Elena · del Carmen.
+const namesScene = $('.names-scene');
+if (namesScene) {
+  const revealNames = () => namesScene.classList.add('names-revealed');
+  if ('IntersectionObserver' in window) {
+    const namesObserver = new IntersectionObserver((entries) => {
+      if (entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .34)) {
+        requestAnimationFrame(() => revealNames());
+        namesObserver.disconnect();
+      }
+    }, { threshold:[.18,.34,.55], rootMargin:'0px 0px -8% 0px' });
+    namesObserver.observe(namesScene);
+  } else {
+    revealNames();
+  }
+}

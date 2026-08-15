@@ -896,3 +896,154 @@ body.library-page{min-height:100%;overflow-x:clip;-webkit-text-size-adjust:100%;
   .chapter-row-main p{font-size:.62rem!important;margin-top:8px!important}
   .chapter-row-meta{margin-top:12px!important}
 }
+
+/* ==========================================================
+   V9 — iPhone Safari: full-screen home composition + name reveal
+   ========================================================== */
+@media (max-width:700px){
+  /* The hero is one complete iPhone screen. No dead zones: the
+     title owns the centre and the action is anchored near the bottom. */
+  .editorial-hero{
+    height:100svh!important;
+    min-height:100svh!important;
+    padding:calc(env(safe-area-inset-top) + 74px) 18px max(18px,calc(env(safe-area-inset-bottom) + 16px))!important;
+    display:block!important;
+    overflow:hidden!important;
+  }
+  .hero-copy-block{
+    width:100%!important;
+    max-width:none!important;
+    height:100%!important;
+    margin:0!important;
+    transform:none!important;
+    display:grid!important;
+    grid-template-rows:auto auto minmax(0,1fr) auto auto!important;
+    align-items:start!important;
+  }
+  .editorial-overline{
+    margin:0 0 12px!important;
+    font-size:8.5px!important;
+    letter-spacing:.25em!important;
+  }
+  .editorial-rule{
+    width:142px!important;
+    margin:0!important;
+    align-self:start!important;
+  }
+  .editorial-hero h1{
+    align-self:center!important;
+    width:100%!important;
+    margin:0!important;
+    font-size:clamp(4.85rem,21.8vw,6.15rem)!important;
+    line-height:.79!important;
+    letter-spacing:-.058em!important;
+  }
+  .editorial-hero h1 em{margin-top:6px!important}
+  .editorial-intro{
+    width:100%!important;
+    max-width:none!important;
+    margin:0 0 18px!important;
+    font-size:.94rem!important;
+    line-height:1.55!important;
+    letter-spacing:-.012em!important;
+    color:#c8bbd1!important;
+  }
+  .editorial-cta{
+    width:100%!important;
+    min-height:52px!important;
+    margin:0!important;
+    padding:0 17px!important;
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    border:1px solid rgba(231,210,246,.18)!important;
+    border-radius:17px!important;
+    background:linear-gradient(135deg,rgba(109,50,151,.26),rgba(54,20,79,.18))!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.035)!important;
+    font-size:.67rem!important;
+    text-decoration:none!important;
+  }
+  .editorial-cta::after{content:none!important}
+  .editorial-cta b{font-size:1rem!important;color:#dcabd2!important}
+
+  /* Names: the questions become her three names when this scene
+     enters the viewport. Designed as a reveal rather than static text. */
+  .names-scene{padding-left:18px!important;padding-right:18px!important;overflow:hidden!important}
+  .name-pills{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+    width:100%!important;
+    max-width:390px!important;
+    margin:40px auto 45px!important;
+  }
+  .name-pill{
+    position:relative!important;
+    width:100%!important;
+    aspect-ratio:1!important;
+    min-width:0!important;
+    height:auto!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(226,199,246,.24)!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle at 35% 25%,rgba(152,83,201,.13),rgba(30,11,47,.25) 62%,transparent)!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.04)!important;
+    overflow:hidden!important;
+    transform:translate3d(0,12px,0) scale(.92)!important;
+    opacity:.7!important;
+    transition:border-color .7s ease,box-shadow .7s ease!important;
+  }
+  .name-pill::before{
+    content:"";position:absolute;inset:-30%;border-radius:50%;
+    background:conic-gradient(from 90deg,transparent 0 34%,rgba(242,164,219,.55) 48%,transparent 63%);
+    opacity:0;transform:rotate(-110deg);pointer-events:none;
+  }
+  .name-pill i,.name-pill b{
+    position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;
+    margin:0!important;padding:10px!important;text-align:center!important;
+  }
+  .name-pill i{
+    font:italic 500 1.8rem/1 var(--serif)!important;color:#d7b4e8!important;
+    transition:opacity .36s ease,transform .6s cubic-bezier(.2,.75,.2,1),filter .45s ease!important;
+  }
+  .name-pill b{
+    opacity:0!important;transform:translateY(12px) scale(.86)!important;
+    font:italic 500 clamp(1.08rem,5vw,1.38rem)/.92 var(--serif)!important;
+    color:#fff!important;
+    text-shadow:0 0 22px rgba(239,152,215,.22)!important;
+    transition:opacity .42s ease,transform .65s cubic-bezier(.16,.84,.26,1)!important;
+  }
+  .name-pill-wide b{font-size:clamp(.94rem,4.35vw,1.18rem)!important;padding-inline:7px!important}
+  .names-scene.names-revealed .name-pill{
+    opacity:1!important;transform:translate3d(0,0,0) scale(1)!important;
+    border-color:rgba(235,165,218,.42)!important;
+    box-shadow:0 0 0 1px rgba(255,255,255,.02),0 12px 38px rgba(120,47,164,.18),inset 0 0 30px rgba(169,85,201,.08)!important;
+    transition-delay:var(--name-delay)!important;
+  }
+  .names-scene.names-revealed .name-pill::before{
+    animation:nameHalo 1.15s cubic-bezier(.2,.7,.2,1) var(--name-delay) both!important;
+  }
+  .names-scene.names-revealed .name-pill i{
+    opacity:0!important;transform:translateY(-10px) scale(1.4) rotate(-8deg)!important;filter:blur(4px)!important;
+    transition-delay:calc(var(--name-delay) + 90ms)!important;
+  }
+  .names-scene.names-revealed .name-pill b{
+    opacity:1!important;transform:translateY(0) scale(1)!important;
+    transition-delay:calc(var(--name-delay) + 260ms)!important;
+  }
+  @keyframes nameHalo{
+    0%{opacity:0;transform:rotate(-110deg) scale(.7)}
+    38%{opacity:.75}
+    100%{opacity:0;transform:rotate(210deg) scale(1.2)}
+  }
+}
+
+@media (max-width:390px) and (max-height:760px){
+  .editorial-hero{padding-top:calc(env(safe-area-inset-top) + 68px)!important;padding-bottom:max(14px,calc(env(safe-area-inset-bottom) + 12px))!important}
+  .editorial-overline{font-size:8px!important;margin-bottom:8px!important}
+  .editorial-rule{width:126px!important}
+  .editorial-hero h1{font-size:clamp(4.35rem,20.4vw,5.25rem)!important}
+  .editorial-intro{font-size:.84rem!important;line-height:1.48!important;margin-bottom:13px!important}
+  .editorial-cta{min-height:48px!important}
+}
